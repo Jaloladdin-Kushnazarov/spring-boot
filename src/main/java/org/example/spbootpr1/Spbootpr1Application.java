@@ -9,8 +9,7 @@ public class Spbootpr1Application {
     public static void main(String[] args) {
         SpringApplication.run(Spbootpr1Application.class, args);
 
-        System.out.println("commit Spring boot JPA, Auditing, Projection  lesson");
-        System.out.println("next time JPA Budy plagin tested");
+        System.out.println("Here, You can see Hateoas");
     }
 
 }
