@@ -10,6 +10,7 @@ public class Spbootpr1Application {
         SpringApplication.run(Spbootpr1Application.class, args);
 
         System.out.println("commit Spring boot JPA, Auditing, Projection  lesson");
+        System.out.println("next time JPA Budy plagin tested");
     }
 
 }
