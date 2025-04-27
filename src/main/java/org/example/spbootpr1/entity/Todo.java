@@ -20,9 +20,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Todo extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String title;
 
 }
