@@ -9,8 +9,8 @@ public class Spbootpr1Application {
     public static void main(String[] args) {
         SpringApplication.run(Spbootpr1Application.class, args);
 
-        System.out.println("Hateoas finished");
-        System.out.println("start data-reset(fast crud)");
+        System.out.println("data-reset(fast crud) finished");
+        System.out.println("start spring security with spring boot");
     }
 
 }
