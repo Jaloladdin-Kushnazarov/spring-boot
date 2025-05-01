@@ -9,8 +9,8 @@ public class Spbootpr1Application {
     public static void main(String[] args) {
         SpringApplication.run(Spbootpr1Application.class, args);
 
-        System.out.println("finished spring secruty with basic authentication");
-        System.out.println("strt spring security with JWT authentication");
+        System.out.println("finished spring secruty with JWT authentication");
+
     }
 
 }
