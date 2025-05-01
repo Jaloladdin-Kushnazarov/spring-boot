@@ -7,10 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.example.spbootpr1.dto.AppErrorDTO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +24,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,28 +34,40 @@ import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
-@RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final ObjectMapper objectMapper;
 
+    public static final String[] WHITE_LIST = {
+            "/api/auth/**",
+//            "/swagger-ui/**",
+//            "/swagger-resources/**",
+//            "/v3/api-docs/**",
+    };
+
+
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   JwtTokenUtil jwtTokenUtil,
+                                                   UserDetailsService userDetailsService) throws Exception {
         return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(WHITE_LIST).permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(httpBasic ->
-                        httpBasic.authenticationEntryPoint(authenticationEntryPoint())
+                .exceptionHandling(eh -> eh
+                        .authenticationEntryPoint(authenticationEntryPoint())
+                        .accessDeniedHandler(accessDeniedHandler())
                 )
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling
-                                .authenticationEntryPoint(authenticationEntryPoint())
-                                .accessDeniedHandler(accessDeniedHandler())
-                )
+                .addFilterBefore(new JwtFilter(jwtTokenUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+
 
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -137,5 +154,8 @@ public class SecurityConfiguration {
         return NoOpPasswordEncoder.getInstance();   // never use this on production
     }
 
-
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }
