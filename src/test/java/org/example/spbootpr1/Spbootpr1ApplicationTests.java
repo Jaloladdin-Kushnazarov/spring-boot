@@ -8,6 +8,7 @@ class Spbootpr1ApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("loading...");
     }
 
 }
