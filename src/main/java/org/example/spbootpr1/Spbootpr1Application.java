@@ -9,7 +9,7 @@ public class Spbootpr1Application {
     public static void main(String[] args) {
         SpringApplication.run(Spbootpr1Application.class, args);
 
-        System.out.println("Spring secruty tugadi MapStruct boshladim");
+        System.out.println("Spring bootda MapStruct tugadi  ");
 
     }
 
