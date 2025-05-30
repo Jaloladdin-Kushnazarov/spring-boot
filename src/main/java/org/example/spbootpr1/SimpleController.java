@@ -11,45 +11,16 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/example")
+@RequestMapping("/api")
 public class SimpleController {
 
-    private final PersonProperties personProperties;
 
-    @Value("${example.string:'Default Message(Learn Java In PDP)'}")
-    private String exampleMessage;
+    private final ReportSenderService reportSenderService;
 
-    @Value("${example.language}")
-    private List<String> exampleLanguages;
-
-    @Value ("#{${example.numbers}}")
-    private Map<String, String> exampleNumbers;
-
-
-
-
-    @GetMapping("/message")
-    public String getExampleMessage() {
-        return exampleMessage;
+    @GetMapping("/sendReort")
+    public String sendReport() {
+        reportSenderService.sendReport("Test uchun");
+        return "Send report successfully!";
     }
-
-
-    @GetMapping("/languages")
-    public List<String> getExampleLanguages() {
-        return exampleLanguages;
-    }
-
-
-    @GetMapping("/numbers")
-    public Map<String, String> getExampleNumbers() {
-        return exampleNumbers;
-    }
-
-
-    @GetMapping("/person")
-    public Person getPerson() {
-        return personProperties.getPerson();
-    }
-
 
 }
