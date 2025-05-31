@@ -1,13 +1,9 @@
 package org.example.spbootpr1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,11 +12,25 @@ public class SimpleController {
 
 
     private final ReportSenderService reportSenderService;
+    private final PostRepository postRepository;
 
     @GetMapping("/sendReort")
     public String sendReport() {
         reportSenderService.sendReport("Test uchun");
         return "Send report successfully!";
+    }
+
+
+    @GetMapping("/posts")
+    public List<Post> getPost() {
+        return postRepository.findAll();
+    }
+
+
+    @PostMapping("/posts")
+    public Post createPost(@RequestBody Post post) {
+        System.out.println(post);
+        return postRepository.save(post);
     }
 
 }

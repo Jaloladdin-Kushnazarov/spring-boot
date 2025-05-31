@@ -18,14 +18,14 @@ public class ReportSenderService {
     public void sendReport(String message) {
 
         try {
-            TimeUnit.SECONDS.sleep(5);
+            TimeUnit.SECONDS.sleep(3);
             //sent message to gmail
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         log.info("Sending message!!!!");
         //ataylab uyushtirilgan xato!!!
-        throw new RuntimeException("Something went wrong!!!!!!!!");
+//        throw new RuntimeException("Something went wrong!!!!!!!!");
     }
 
 
