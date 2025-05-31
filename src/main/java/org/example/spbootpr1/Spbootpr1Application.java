@@ -9,7 +9,7 @@ public class Spbootpr1Application {
     public static void main(String[] args) {
         SpringApplication.run(Spbootpr1Application.class, args);
 
-        System.out.println("Spring bootda finished profiling ");
+        System.out.println("Spring bootda start learning Mailing and FreeMarker ");
 
     }
 
