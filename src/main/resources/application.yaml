@@ -1,14 +1,4 @@
-spring:
-  mail:
-    host: 'sandbox.smtp.mailtrap.io'
-    port: 587
-    username: 3e2f5c03e74e6f
-    password: 726aa7a00fc3fe
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-  freemarker:
-    template-loader-path: 'classpath:/templates'
+logging:
+  level:
+    org.zalando.logbook: trace
+
